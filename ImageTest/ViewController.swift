@@ -8,33 +8,19 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController,UIViewControllerTransitioningDelegate {
     
     fileprivate var collectionView:UICollectionView?
+    fileprivate let targetVC = TargetViewController()
+    fileprivate let animator = BlowUpAnimator()
+    fileprivate let dismissAnimator = ReduceAnimator()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        setup()
-        
-        let image1 = UIImageView()
-        image1.image = UIImage(named: "737c2fe45cd0e2a1afbee54daef39895")
-        image1.contentMode = .scaleAspectFit
-        view.addSubview(image1)
-        image1.clipsToBounds = true
-        image1.layer.contentsRect = CGRect(x: 00, y: 00, width: 0.8, height: 0.8)
-        image1.frame = CGRect(x: 0, y: 0, width: 100, height: 80)
-        
-        
-        let image2 = UIImageView()
-        image2.image = UIImage(named: "737c2fe45cd0e2a1afbee54daef39895")
-        image2.contentMode = .scaleAspectFit
-        view.addSubview(image2)
-        image2.clipsToBounds = true
-        image2.frame = CGRect(x: 0, y: 100, width: 100, height: 80)
-        
-        
-        
-        
+        setup()
+        targetVC.transitioningDelegate = self
+        targetVC.modalPresentationStyle = .custom
         
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -56,16 +42,34 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        
+        let image = UIImageView()
+        image.image = UIImage.init(named: "737c2fe45cd0e2a1afbee54daef39895")
+        image.frame = CGRect(x: -(view.frame.size.width - 300) / 2, y: 0, width: view.frame.size.width, height: 300)
+        cell.addSubview(image)
+        cell.clipsToBounds = true
         cell.backgroundColor = .green
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        let frame = collectionView.convert((cell?.frame)!, to: self.view)
+        
+        animator.fromRect = frame
+        dismissAnimator.fromRect = frame
+        navigationController?.present(targetVC, animated: true, completion: nil)
+    }
+}
 
-//    //返回自定义的cell
-//    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {
-//        
-//        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath as IndexPath)
-//        return cell
-//    }
+extension ViewController {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return animator
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return dismissAnimator
+    }
 }
 
 extension ViewController {
