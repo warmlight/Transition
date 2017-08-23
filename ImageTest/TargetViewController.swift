@@ -13,9 +13,16 @@ class TargetViewController: UIViewController {
     fileprivate let image = UIImageView()
     fileprivate let scrollview = UIScrollView()
     fileprivate let contentlabel = UILabel()
+    fileprivate let label = UILabel()
     
     override func viewWillAppear(_ animated: Bool) {
         setup()
+        
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveLinear, animations: {
+            self.label.frame = CGRect(x: 15, y: 15, width: 200, height: 30)
+
+        }) { (finished: Bool) in
+        }
     }
     
     override func viewDidLoad() {
@@ -37,12 +44,6 @@ class TargetViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        
-    }
 }
 
 // MARK: Animate
@@ -52,8 +53,10 @@ extension TargetViewController {
     }
     
     private func moveImage() {
-//        let imageFrame = scrollview.convert(image.frame, to: view)
         let targetFrame = CGRect(x: 0, y: scrollview.contentOffset.y, width: image.frame.width, height: image.frame.height)
+        if scrollview.contentOffset.y > image.frame.height {
+            self.image.frame = CGRect(x: 0, y: scrollview.contentOffset.y - image.frame.height, width: image.frame.width, height: image.frame.height)
+        }
         UIView.animate(withDuration: 0.5) {
             self.image.frame = targetFrame
         }
@@ -63,8 +66,13 @@ extension TargetViewController {
         if needMoveImage() {
             moveImage()
         }
-    }
+        
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveLinear, animations: {
+            self.label.frame = CGRect(x: (self.view.frame.size.width - 300) / 2 + 15, y: 50, width: 200, height: 30)
 
+        }) { (finished: Bool) in
+        }
+    }
 }
 
 extension TargetViewController {
@@ -73,12 +81,14 @@ extension TargetViewController {
         setupImageView()
         setupScrollView()
         setupContentLabel()
+        setupLabel()
     }
     
     private func addSubviews() {
         view.addSubview(scrollview)
         scrollview.addSubview(contentlabel)
         scrollview.addSubview(image)
+        image.addSubview(label)
     }
     
     private func setupScrollView() {
@@ -90,6 +100,13 @@ extension TargetViewController {
     private func setupImageView() {
         image.image = UIImage(named: "737c2fe45cd0e2a1afbee54daef39895")
         image.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: 300)
+    }
+    
+    private func setupLabel() {
+        label.frame = CGRect(x: (view.frame.size.width - 300) / 2 + 15, y: 50, width: 200, height: 30)
+        label.font = .systemFont(ofSize: 30)
+        label.textColor = .white
+        label.text = "New Merge"
     }
     
     private func setupContentLabel() {

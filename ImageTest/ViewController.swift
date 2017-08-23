@@ -14,6 +14,7 @@ class ViewController: UIViewController,UIViewControllerTransitioningDelegate {
     fileprivate let targetVC = TargetViewController()
     fileprivate let animator = BlowUpAnimator()
     fileprivate let dismissAnimator = ReduceAnimator()
+    fileprivate var selectedCell = TestCollectionViewCell()
 
 
     override func viewDidLoad() {
@@ -22,12 +23,22 @@ class ViewController: UIViewController,UIViewControllerTransitioningDelegate {
         targetVC.transitioningDelegate = self
         targetVC.modalPresentationStyle = .custom
         
+        NotificationCenter.default.addObserver(self, selector: #selector(changeCellHidden), name: NSNotification.Name(rawValue: "HiddenCell"), object: nil)
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+}
+
+extension ViewController {
+    @objc fileprivate func changeCellHidden() {
+        if selectedCell.isHidden {
+            selectedCell.isHidden = false
+        }
     }
 }
 
@@ -41,21 +52,16 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        
-        let image = UIImageView()
-        image.image = UIImage.init(named: "737c2fe45cd0e2a1afbee54daef39895")
-        image.frame = CGRect(x: -(view.frame.size.width - 300) / 2, y: 0, width: view.frame.size.width, height: 300)
-        cell.addSubview(image)
-        cell.clipsToBounds = true
-        cell.backgroundColor = .green
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! TestCollectionViewCell
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        let frame = collectionView.convert((cell?.frame)!, to: self.view)
+        let cell = collectionView.cellForItem(at: indexPath) as! TestCollectionViewCell
+        let frame = collectionView.convert(cell.frame, to: self.view)
         
+        selectedCell = cell
+        selectedCell.isHidden = true
         animator.fromRect = frame
         dismissAnimator.fromRect = frame
         navigationController?.present(targetVC, animated: true, completion: nil)
@@ -93,7 +99,7 @@ extension ViewController {
         collectionView?.delegate = self
         collectionView?.dataSource = self
         collectionView?.backgroundColor = .red
-        collectionView?.register(UICollectionViewCell.self , forCellWithReuseIdentifier: "cell")
+        collectionView?.register(TestCollectionViewCell.self , forCellWithReuseIdentifier: "cell")
     }
 }
 

@@ -19,6 +19,7 @@
 		D862626D1F4B3A7100B2C7CC /* TargetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D862626C1F4B3A7100B2C7CC /* TargetViewController.swift */; };
 		D862626F1F4B3B8000B2C7CC /* BlowUpAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D862626E1F4B3B8000B2C7CC /* BlowUpAnimator.swift */; };
 		E441277D1F4C3A570096C0A9 /* ReduceAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E441277C1F4C3A570096C0A9 /* ReduceAnimator.swift */; };
+		E441277F1F4D6F300096C0A9 /* TestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E441277E1F4D6F300096C0A9 /* TestCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		D862626C1F4B3A7100B2C7CC /* TargetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetViewController.swift; sourceTree = "<group>"; };
 		D862626E1F4B3B8000B2C7CC /* BlowUpAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlowUpAnimator.swift; sourceTree = "<group>"; };
 		E441277C1F4C3A570096C0A9 /* ReduceAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReduceAnimator.swift; sourceTree = "<group>"; };
+		E441277E1F4D6F300096C0A9 /* TestCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 				D862626A1F49EB5000B2C7CC /* 737c2fe45cd0e2a1afbee54daef39895.png */,
 				D862623A1F49D4C100B2C7CC /* AppDelegate.swift */,
 				D862623C1F49D4C100B2C7CC /* ViewController.swift */,
+				E441277E1F4D6F300096C0A9 /* TestCollectionViewCell.swift */,
 				D862626E1F4B3B8000B2C7CC /* BlowUpAnimator.swift */,
 				E441277C1F4C3A570096C0A9 /* ReduceAnimator.swift */,
 				D862626C1F4B3A7100B2C7CC /* TargetViewController.swift */,
@@ -276,6 +279,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E441277F1F4D6F300096C0A9 /* TestCollectionViewCell.swift in Sources */,
 				D862623D1F49D4C100B2C7CC /* ViewController.swift in Sources */,
 				E441277D1F4C3A570096C0A9 /* ReduceAnimator.swift in Sources */,
 				D862626D1F4B3A7100B2C7CC /* TargetViewController.swift in Sources */,
